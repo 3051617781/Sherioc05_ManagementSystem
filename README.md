@@ -1,7 +1,7 @@
 # Sherioc05_ManagementSystem
-## Java档案管理系统
+# Java档案管理系统
 
-### 课程目标
+## 课程目标
 
 ![1699576803100](C:\Users\张杰\AppData\Roaming\Typora\typora-user-images\1699576803100.png)
 
@@ -70,9 +70,7 @@ BS模式的优点是客户端使用浏览器作为用户界面，无需安装额
 
 选择使用CS模式还是BS模式，取决于具体的应用需求和技术考虑。如果需要较为复杂的用户界面和交互体验，以及对客户端计算能力的利用，可以选择CS模式。如果希望简化客户端的部署和维护，并且用户界面和交互相对简单，可以选择BS模式。
 
-## 迭代
-
-### 第一次实验
+## 第一次实验
 
 ```java
 项目结构：
@@ -86,11 +84,11 @@ BS模式的优点是客户端使用浏览器作为用户界面，无需安装额
     	|-Operator.java			子类-档案录入员
 ```
 
+总结
 
+1、Scanner
 
-#### 错误
-
-1、三个子类中都要使用Scanner对象进行输入，于是我多次创建关闭Scanner对象：
+三个子类中都要使用Scanner对象进行输入，于是我多次创建关闭Scanner对象：
 
 ```java
 //Administartor中的方法
@@ -118,5 +116,55 @@ void addUser(){
 public static Scanner scanner = new Scanner(System.in)
 在其他类中使用时只需调用Main.scanner.方法
 Main.scanner.nextLine()
+```
+
+2、HashMap
+
+```java
+HashMap的方法：
+
+
+```
+
+## 第二次实验
+
+```java
+项目结构：
+|
+|-src
+    |
+    |-DataProcessing.java 	数据处理类
+    |-User.java				抽象类
+    	|-Browser.java			子类-档案浏览者
+		|-Administator.java		子类-管理员
+    	|-Operator.java			子类-档案录入员
+```
+
+总结
+
+1、try-catch
+
+在DataProcessing类中，并没有处理异常，而是直接抛出
+
+```java
+public static User searchUser(String name) throws SQLException{
+	if( !connectToDB ) 
+	throw new SQLException( "Not Connected to DB" );
+		...//业务逻辑
+}
+```
+
+在实体类中，对异常情况进行处理
+
+```java
+public boolean modifyUser() {
+	...
+    try {
+        DataProcessing.update(name, password, role);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 ```
 

@@ -1,6 +1,8 @@
 
 // 管理员 修改用户、删除用户、新增用户、列出用户、下载文件、文件列表、修改密码、退出
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Enumeration;
 
 public class Administrator extends User {
@@ -16,38 +18,56 @@ public class Administrator extends User {
             //修改用户
             case"1":{
                 modifyUser();
+                break;
             }
             //删除用户
             case"2":{
                 delUser();
+                break;
             }
             //增加用户
             case"3":{
                 addUser();
+                break;
             }
             //列出所有用户
             case"4":{
                 listUser();
+                break;
             }
             //下载文件
             case "5":{
                 System.out.println("enter the file name:");
                 String file = Main.scanner.nextLine();
-                downloadFile(file);
+                try {
+                    downloadFile(file);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
             }
             //文件列表
             case "6":{
-                showFileList();
+                try {
+                    showFileList();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
             }
             //修改密码
             case "7":{
                 System.out.println("enter the new password:");
                 String password = Main.scanner.nextLine();
                 changeSelfInfo(password);
+                break;
             }
             //退出
             case "8":{
                 exitSystem();
+                break;
             }
             default:
                 System.out.println("Error enter!");
@@ -65,9 +85,15 @@ public class Administrator extends User {
         System.out.println("enter the new role");
         String role = Main.scanner.nextLine();
 
-        if(DataProcessing.update(name, password, role)){
-            return true;
-        }else{
+        try {
+            if(DataProcessing.update(name, password, role)){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             return false;
         }
 
@@ -78,9 +104,15 @@ public class Administrator extends User {
         System.out.println("enter the user name:");
         String name = Main.scanner.nextLine();
 
-        if(DataProcessing.delete(name)){
-            return true;
-        }else{
+        try {
+            if(DataProcessing.delete(name)){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             return false;
         }
     }
@@ -94,9 +126,15 @@ public class Administrator extends User {
         System.out.println("enter the user role:");
         String role = Main.scanner.nextLine();
 
-        if(DataProcessing.insert(name, password, role)){
-            return true;
-        }else{
+        try {
+            if(DataProcessing.insert(name, password, role)){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
             return false;
         }
     }
@@ -104,7 +142,14 @@ public class Administrator extends User {
 
     // 列出用户
     public void listUser() {
-        Enumeration<User> users = DataProcessing.getAllUser();
+        Enumeration<User> users;
+        try {
+            users = DataProcessing.getAllUser();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return;
+        }
         //使用while循环和hasMoreElements()方法来检查是否还有下一个用户对象可供遍历，如果有，就使用nextElement()方法获取下一个用户对象
         while(users.hasMoreElements()){
             User user = users.nextElement();

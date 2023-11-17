@@ -1,6 +1,9 @@
 
 //档案录入员 上传文件、下载文件、文件列表、修改密码、退出
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class Operator extends User{
 
     Operator(String name, String password, String role) {
@@ -13,26 +16,41 @@ public class Operator extends User{
         switch (Main.scanner.nextLine()) {
             case"1":{
                 uploadFile();
+                break;
             }
             //下载文件
             case "2":{
                 System.out.println("enter the file name:");
                 String file = Main.scanner.nextLine();
-                downloadFile(file);
+                try {
+                    downloadFile(file);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
             }
             //文件列表
             case "3":{
-                showFileList();
+                try {
+                    showFileList();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
             }
             //修改密码
             case "4":{
                 System.out.println("enter the new password:");
                 String password = Main.scanner.nextLine();
                 changeSelfInfo(password);
+                break;
             }
             //退出
             case "5":{
                 exitSystem();
+                break;
             }
             default:
                 System.out.println("Error enter!");
@@ -43,6 +61,8 @@ public class Operator extends User{
     //上传文件
     public boolean uploadFile(){
         System.out.println("enter the file path:");
+        String path = Main.scanner.nextLine();
+        
 		return true;
     }
 }
