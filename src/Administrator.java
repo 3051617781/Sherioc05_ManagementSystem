@@ -1,5 +1,7 @@
 
-// 管理员Administrator
+// 管理员 修改用户、删除用户、新增用户、列出用户、下载文件、文件列表、修改密码、退出
+
+import java.util.Enumeration;
 
 public class Administrator extends User {
 
@@ -9,44 +11,63 @@ public class Administrator extends User {
 
     @Override
     public void showMenu() {
-        // Scanner scanner = new Scanner(System.in);
-        System.out.println("1-addUser 2-delUser 3-changeUser 4-listUser ");
+        System.out.println("1-modifyUser 2-delUser 3-addUser 4-listUser 5-downloadFile 6-showFileList 7-changePassword 8-exit");
         switch (Main.scanner.nextLine()) {
-            case "1":
-                addUser();
-                break;
-            case "2":
+            //修改用户
+            case"1":{
+                modifyUser();
+            }
+            //删除用户
+            case"2":{
                 delUser();
-                break;
-            case "3":
-                changeUserInfo();
-                break;
-            case "4":
+            }
+            //增加用户
+            case"3":{
+                addUser();
+            }
+            //列出所有用户
+            case"4":{
                 listUser();
-                break;
+            }
+            //下载文件
+            case "5":{
+                System.out.println("enter the file name:");
+                String file = Main.scanner.nextLine();
+                downloadFile(file);
+            }
+            //文件列表
+            case "6":{
+                showFileList();
+            }
+            //修改密码
+            case "7":{
+                System.out.println("enter the new password:");
+                String password = Main.scanner.nextLine();
+                changeSelfInfo(password);
+            }
+            //退出
+            case "8":{
+                exitSystem();
+            }
             default:
                 System.out.println("Error enter!");
                 break;
         }
-        // scanner.close();
     }
 
-    // 增加
-    public boolean addUser() {
-        // Scanner scanner = new Scanner(System.in);
-        System.out.println("<Admin>AddUser: Enter the User name:");
+    // 修改用户
+    public boolean modifyUser() {
+        //修改用户
+        System.out.println("enter the user name:");
         String name = Main.scanner.nextLine();
-        System.out.println("<Admin>AddUser: Enter the User password:");
+        System.out.println("enter the new password");
         String password = Main.scanner.nextLine();
-        System.out.println("<Admin>AddUser: Enter the User role:");
+        System.out.println("enter the new role");
         String role = Main.scanner.nextLine();
-        // scanner.close();
 
-        if (DataProcessing.insert(name, password, role) == true) {
-            System.out.println("<Admin> Success Add!");
+        if(DataProcessing.update(name, password, role)){
             return true;
-        } else {
-            System.out.println("<Admin> Error Add!");
+        }else{
             return false;
         }
 
@@ -54,68 +75,41 @@ public class Administrator extends User {
 
     // 删除
     public boolean delUser() {
-        // Scanner scanner = new Scanner(System.in);
-        System.out.println("<Admin>DelUser: Enter the User name:");
+        System.out.println("enter the user name:");
         String name = Main.scanner.nextLine();
-        // scanner.close();
 
-        if (DataProcessing.delete(name) == true) {
-            System.out.println("<Admin> Success Del!");
+        if(DataProcessing.delete(name)){
             return true;
-        } else {
-            System.out.println("<Admin> Error Del!");
+        }else{
             return false;
         }
     }
 
-    // 查询
+    // 增加
+    public boolean addUser() {
+        System.out.println("enter the user name:");
+        String name = Main.scanner.nextLine();
+        System.out.println("enter the user password:");
+        String password = Main.scanner.nextLine();
+        System.out.println("enter the user role:");
+        String role = Main.scanner.nextLine();
+
+        if(DataProcessing.insert(name, password, role)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    // 列出用户
     public void listUser() {
-        // Scanner scanner = new Scanner(System.in);
-        // 查询用户并显示信息
-        System.out.println("<Admin>ChangeUserInfo: Enter the user name:");
-        String str = Main.scanner.nextLine();
-
-        User user = DataProcessing.searchUser(str);
-        String name = user.getName();
-        String password = user.getPassword();
-        String role = user.getRole();
-        System.out.println(
-                "<Admin>ChangeUserInfo:\n userName: " + name + " password: " + password + " role: " + role + '\n');
-        // scanner.close();
-
-    }
-
-    // 修改用户信息
-    public boolean changeUserInfo() {
-        // Scanner scanner = new Scanner(System.in);
-        // 查询用户并显示信息
-        System.out.println("<Admin>ChangeUserInfo: Enter the user name:");
-        String str = Main.scanner.nextLine();
-
-        User user = DataProcessing.searchUser(str);
-        String name = user.getName();
-        String password = user.getPassword();
-        String role = user.getRole();
-        System.out.println(
-                "<Admin>ChangeUserInfo:\n userName: " + name + " password: " + password + " role: " + password + '\n');
-
-        // 修改用户信息
-        System.out.println("<Admin>ChangeUserInfo:Enter the userName:");
-        name = Main.scanner.nextLine();
-        System.out.println("<Admin>ChangeUserInfo:Enter the password:");
-        password = Main.scanner.nextLine();
-        System.out.println("<Admin>ChangeUserInfo:Enter the role:");
-        role = Main.scanner.nextLine();
-        // scanner.close();
-
-        if (DataProcessing.update(name, password, role) == true) {
-            System.out.println("<Admin>ChangeUserInfo: Success Change!");
-            return true;
-        } else {
-            System.out.println("<Admin>ChangeUserInfo: Error Change!");
-            return false;
+        Enumeration<User> users = DataProcessing.getAllUser();
+        //使用while循环和hasMoreElements()方法来检查是否还有下一个用户对象可供遍历，如果有，就使用nextElement()方法获取下一个用户对象
+        while(users.hasMoreElements()){
+            User user = users.nextElement();
+            System.out.println(user.toString()); 
         }
-
     }
 
 }

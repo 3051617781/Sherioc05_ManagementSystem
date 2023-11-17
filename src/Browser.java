@@ -1,5 +1,7 @@
 
-// 普通用户Browser
+//档案浏览者 下载文件、文件列表、修改密码、退出
+
+
 
 public class Browser extends User{
 
@@ -9,18 +11,34 @@ public class Browser extends User{
 
     @Override
     public void showMenu() {
-        // Scanner scanner = new Scanner(System.in);
-        System.out.println("1-showFileList 2-downloadFile 3-changeSelfInfo");
+        System.out.println("1-downloadFile 2-showFileList 3-changePassword 4-exit");
         switch (Main.scanner.nextLine()) {
-            case "1":showFileList();break;
-            case "2":downloadFile("getName()");break;
-            case "3":changeSelfInfo("getPassword()");break;
+            //下载文件
+            case "1":{
+                System.out.println("enter the file name:");
+                String file = Main.scanner.nextLine();
+                downloadFile(file);
+            }
+            //文件列表
+            case "2":{
+                showFileList();
+            }
+            //修改密码
+            case "3":{
+                System.out.println("enter the new password:");
+                String password = Main.scanner.nextLine();
+                changeSelfInfo(password);
+            }
+            //退出
+            case "4":{
+                exitSystem();
+            }
             default:
                 System.out.println("Error enter!");
                 break;
         }
-        // scanner.close();
     }
+
 
     
 }

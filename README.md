@@ -79,11 +79,11 @@ BS模式的优点是客户端使用浏览器作为用户界面，无需安装额
 |
 |-src
     |
-    |-DataProcessing.java 	数据处理
-    |-User.java				父类
-	|-Administator.java		子类-管理员
-    |-Browser.java			子类-普通用户
-    |-Operator.java			子类-文件管理者
+    |-DataProcessing.java 	数据处理类
+    |-User.java				抽象类
+    	|-Browser.java			子类-档案浏览者
+		|-Administator.java		子类-管理员
+    	|-Operator.java			子类-档案录入员
 ```
 
 
@@ -107,7 +107,7 @@ void addUser(){
 }
 ```
 
-但运行时出现如下报错：di
+但运行时出现如下报错：
 
 ![1699590678224](C:\Users\张杰\AppData\Roaming\Typora\typora-user-images\1699590678224.png)
 

@@ -10,10 +10,11 @@ public abstract class User {
 		this.role=role;				
 	}
 	
+	//修改自己密码
 	public boolean changeSelfInfo(String password){
 		if (DataProcessing.update(name, password, role)){
 			this.password=password;
-			System.out.println("�޸ĳɹ�");
+			System.out.println("success change");
 			return true;
 		}else
 			return false;
@@ -21,17 +22,20 @@ public abstract class User {
 	
 	public abstract void showMenu();
 	
+	//下载文件
 	public boolean downloadFile(String filename){
-		System.out.println("Success download file");
+		System.out.println("downloading... ...");
 		return true;
 	}
 	
+	//文件列表
 	public void showFileList(){
-		System.out.println("Show FileList");
+		System.out.println("fileList");
 	}
 	
+	//退出
 	public void exitSystem(){
-		System.out.println("Success Exit!");
+		System.out.println("success exit! ");
 		System.exit(0);
 	}
 
@@ -58,6 +62,10 @@ public abstract class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", password=" + password + ", role=" + role + "]";
+	}
+	
 }
