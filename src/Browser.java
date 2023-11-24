@@ -24,6 +24,9 @@ public class Browser extends User{
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
                 break;
             }
