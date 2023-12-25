@@ -1,7 +1,7 @@
 package util;
 
-import javax.xml.transform.sax.SAXTransformerFactory;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBUtils {
@@ -75,4 +75,65 @@ public class DBUtils {
         return 0;
     }
 
+    public static Object[][] docExecuteQuery(String sql){
+        List<Object[]> list= new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            connection  = DBUtils.open();
+            ps = DBUtils.preparedStatement(sql, null, connection);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new Object[]{rs.getString("ID"),
+                        rs.getString("filename"),
+                        rs.getString("description"),
+                        rs.getString("creator"),
+                        rs.getTimestamp("timestamp")
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBUtils.closeAll(connection,ps, rs); //关闭资源
+        }
+        //封装为二维数组返回
+        Object[][] result = new Object[list.size()][];
+        for(int i = 0; i < list.size(); i++){
+            result[i] = list.get(i);
+        }
+        return result;
+    }
+    public static Object[][] userExecuteQuery(String sql ,List param){
+        List<Object[]> list= new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            connection  = DBUtils.open();
+            ps = DBUtils.preparedStatement(sql, param, connection);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new Object[]{rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getInt("role")});
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DBUtils.closeAll(connection,ps, rs); //关闭资源
+        }
+
+        //封装为二维数组返回
+        Object[][] result = new Object[list.size()][];
+        for(int i = 0; i < list.size(); i++){
+            result[i] = list.get(i);
+            switch ((int)result[i][2]){
+                case 0: result[i][2] = "管理员"; break;
+                case 1: result[i][2] = "档案员"; break;
+                case 2: result[i][2] = "浏览者"; break;
+            }
+        }
+        return result;
+    }
 }

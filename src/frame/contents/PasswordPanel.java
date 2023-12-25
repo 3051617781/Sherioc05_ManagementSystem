@@ -1,5 +1,6 @@
 package frame.contents;
 
+import Dao.UserDao;
 import frame.LoginPanel;
 import frame.MainFrame;
 import frame.SystemPanel;
@@ -28,7 +29,7 @@ public class PasswordPanel extends JPanel{
                 if(!pwd.equals(confirm)){
                     JOptionPane.showMessageDialog(btn1.getParent(),"两次输入密码不一致，请重新输入!","system show", JOptionPane.WARNING_MESSAGE);
                 }else{
-                    MainFrame.user.setPassword(pwd);
+                    UserDao.changeSelfPassword(pwd);
                     MainFrame.setContentPanel(new LoginPanel()); //重置密码后回到登录界面
                 }
             }

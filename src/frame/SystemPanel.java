@@ -19,8 +19,6 @@ public class SystemPanel extends JPanel {
         JMenuBar menuBar = new JMenuBar();
         JMenu userMenu = new JMenu("用户管理"); menuBar.add(userMenu);
         JMenu docMenu = new JMenu("档案管理"); menuBar.add(docMenu);
-//        JMenuItem uploadItem = new JMenuItem("档案上传"); docMenu.add(uploadItem);
-//        JMenuItem downloadItem = new JMenuItem("档案下载"); docMenu.add(downloadItem);
         JMenu selfMenu = new JMenu("个人管理"); menuBar.add(selfMenu);
         JMenuItem passwordItem = new JMenuItem("修改密码"); selfMenu.add(passwordItem);
         JMenuItem logoutItem = new JMenuItem("退出登录"); selfMenu.add(logoutItem);
