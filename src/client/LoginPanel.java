@@ -3,26 +3,28 @@ import common.Dao.UserDao;
 import common.pojo.User;
 import common.util.SystemConstants;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 
 public class LoginPanel extends JPanel {
     public LoginPanel(Client client){
         this.setBounds(0, 0, SystemConstants.FRAME_WIDTH, SystemConstants.FRAME_HEIGHT);
+//        this.setBackground(Color.LIGHT_GRAY);
+        this.setLayout(new FlowLayout());
 
         this.add(new JLabel("用户名"));
         JTextField nameField = new JTextField(10);
         this.add(nameField);
-
         this.add(new JLabel("密码"));
         JPasswordField pwdField  = new JPasswordField(10);
         this.add(pwdField);
-
-
-        JButton loginButton = new JButton("login");
+        JButton loginButton = new JButton("登录");
         this.add(loginButton);
+
+
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
